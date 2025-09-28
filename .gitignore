@@ -30,3 +30,8 @@ build/
 #App
 Data/
 Results/
+QuestionBank/
+sim.out
+op.txt
+trash/
+SolutionBank/

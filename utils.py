@@ -1,8 +1,7 @@
 import json
 import os
 import pandas as pd
-from openpyxl import load_workbook
-from columns_config import MODULES, TOTAL_MARKS
+import csv
 
 def read_json(filepath: str):
     with open(filepath, "r") as f:
@@ -27,20 +26,20 @@ def clean_json_output(raw_output: str) -> dict:
     return json.loads(clean)
 
 
-def json_to_row(json_data, student_id):
+def json_to_row(json_data, student_id, modules, total_marks):
     """
     Converts LLM JSON evaluation output into a row dict suitable for Excel.
     Marks and feedback are placed side by side for each module.
     """
     row = {"student_id": student_id}
     
-    for module, max_marks in MODULES.items():
+    for module, max_marks in modules.items():
         key = f"{module} ({max_marks}m)"
         row[f"{key} marks"] = json_data.get(key, {}).get("marks", 0)
         row[f"{key} feedback"] = json_data.get(key, {}).get("feedback", "Not implemented.")
     
     # Add total
-    row[f"total ({TOTAL_MARKS}m)"] = json_data.get(f"total ({TOTAL_MARKS}m)", 0)
+    row[f"total ({total_marks}m)"] = json_data.get(f"total ({total_marks}m)", 0)
     
     return row
 
@@ -69,3 +68,19 @@ def append_row_to_excel(excel_path, row, columns):
 
         # Save back to Excel
         updated_df.to_excel(excel_path, index=False)
+
+
+def read_module_csv(file_path):
+    module_dict = {}
+    with open(file_path, mode="r", newline="") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if len(row) != 2:
+                continue  # skip malformed rows
+            module, marks = row[0].strip(), row[1].strip()
+            try:
+                module_dict[module] = float(marks)
+            except ValueError:
+                # if not an integer, skip or store as-is
+                continue
+    return module_dict
