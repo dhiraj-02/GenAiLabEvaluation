@@ -30,3 +30,8 @@ Any one: Activate virtual env
 
 Run the project
         streamlit run ui.py
+
+
+
+##Other Info:
+    Can see each API prompt and Response in op.txt in root directory after task is completed.
