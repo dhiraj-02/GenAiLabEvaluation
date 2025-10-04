@@ -1,0 +1,56 @@
+CS F342 Computer Architecture Lab Exam
+
+Date: 27-Nov-2022 TIME: 60 Minutes MM: 28
+
+INSTRUCTIONS:
+(i) Create a project with your IDNO
+(iii) Write your IDNO and name in .v file. Write all modules in a single .v file.
+
+Q. Implement a digital circuit to encrypt an 8-bit number with an 8-bit key as follows:
+Both the number and the key are loaded into two 8-bit registers simultaneously.
+The four LSBs of the number (bit positions 3:0) are passed through an Expansion D-box (Fig. 2), which expands and outputs a new 8-bit number.
+This 8-bit number is XORed with the key to give an XORed output.
+The four MSBs of this XORed output (bit positions 7:4) are added to the four LSBs of this XORed output using a Carry-Select Adder (CSA). In addition, the carry-in Cin to the CSA is the 1-bit LSB from the key.
+The 4-bit output of the CSA is XORed with the four MSBs of the original input number.
+The result from the above XOR is concatenated with four LSBs of the original input number to finally give the encrypted number.
+The overall encryption process is shown in Fig. 1.
+
+Expansion D-box
+
+(Fig. 2 shows how the 4-bit input is expanded into 8 bits.)
+
+CSA Adder
+
+(Fig. 3 shows the circuit of the 4-bit CSA adder.)
+
+Modules Description
+
+REG_8BIT (reg_out, num_in, clock, reset):
+Implements an 8-bit register which stores the 8-bit value num_in at a positive clock edge when reset is disabled.
+
+EXPANSION_BOX (in, out):
+Expands the 4-bit input into an 8-bit output.
+
+XOR_8BIT (xout_8, xin1_8, xin2_8):
+XORs two 8-bit inputs.
+
+XOR_4BIT (xout_4, xin1_4, xin2_4):
+XORs two 4-bit inputs.
+
+CSA_4BIT (cin, inA, inB, cout, out):
+Adds two 4-bit inputs inA and inB using ripple carry adders. The selected adder depends on cin, chosen using a multiplexer.
+
+CONCAT (concat_out, concat_in1, concat_in2):
+Concatenates two 4-bit inputs into an 8-bit output.
+
+ENCRYPT (number, key, clock, reset, enc_number):
+Wrapper module to integrate the overall design.
+
+Testbench
+Write an appropriate TESTBENCH module to verify the design. Instantiate the module ENCRYPT, which takes the number and key as input and gives the encrypted output.
+Test for the following combinations:
+
+Num = 0100_0110, Key = 1001_0011
+Num = 1100_1001, Key = 1010_1100
+Num = 1010_0101, Key = 0101_1010
+Num = 1111_0000, Key = 1011_0001
