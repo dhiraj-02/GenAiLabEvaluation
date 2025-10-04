@@ -1,7 +1,32 @@
-GUI
-1) Question paper txt
-2) Solution with marking scheme
-3) number of columns
-4) Columns with marks
-5) Zip file student solutions
-6) partial continuity
+#Setup
+- make sure python is installed
+
+
+First Time:
+    #in the root directory of project:
+
+    ##1. create a new file .env file as in .env.example and add keys
+
+    ##2.
+    Create Virtual env
+        python -m venv ./venv
+
+    Any one: Activate virtual env
+        powershell: venv\Scripts\Activate.ps1
+        commandpromp: venv\Scripts\activate
+
+    Install dependencies
+        pip install -r requirements.txt
+
+    Run the project
+        streamlit run ui.py
+
+
+From next time onwards:
+
+Any one: Activate virtual env
+        powershell: venv\Scripts\Activate.ps1
+        commandpromp: venv\Scripts\activate
+
+Run the project
+        streamlit run ui.py
