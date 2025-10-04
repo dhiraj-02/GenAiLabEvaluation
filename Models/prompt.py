@@ -11,7 +11,7 @@ def get_verilog_prompt_json(question: str, answer_scheme: str, student_answer: s
 
     # Construct JSON keys with marks for the system message
     module_keys = ",\n  ".join([
-        f'"{name} ({marks}m)": {{"marks": <int>, "feedback": "<short>"}}'
+        f'"{name} ({marks}m)": {{"marks": <float>, "feedback": "<short>"}}'
         for name, marks in modules.items()
     ])
 
@@ -24,8 +24,8 @@ def get_verilog_prompt_json(question: str, answer_scheme: str, student_answer: s
 
     Notes:
     - Always include all module keys above, even if the student has not implemented them (then give marks=0 with feedback "Not implemented").
-    - "marks" must be an integer (partial marks allowed).
-    - "feedback" must be a single short phrase (< 12 words).
+    - "marks" must be an float only 0.5 no other fraction is allowed.
+    - "feedback" must be a single short and to the point phrase (<= 5 words), if correct then give "".
     - Do NOT add extra fields, text, or explanation outside JSON."""
 
     content_message = f"""question:

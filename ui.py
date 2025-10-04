@@ -126,7 +126,13 @@ def submit_task_ui():
     with col1:
         if os.path.exists(question_file):
             with open(question_file, "r") as f:
-                st.text_area("Question Text Preview", f.read(), height=300, disabled=True, key=f"qprev_{prefix}")
+                st.text_area(
+                    "Question Text Preview",
+                    f.read(),
+                    height=300,
+                    disabled=True,
+                    key=f"qprev_{prefix}_{selected_q}"   # 👈 include selected_q in the key
+                )
         else:
             st.warning("No question.txt found!")
             files_exist = False
@@ -134,14 +140,26 @@ def submit_task_ui():
     with col2:
         if os.path.exists(answer_file):
             with open(answer_file, "r") as f:
-                st.text_area("Answer Scheme Preview", f.read(), height=300, disabled=True, key=f"aprev_{prefix}")
+                st.text_area(
+                    "Answer Scheme Preview",
+                    f.read(),
+                    height=300,
+                    disabled=True,
+                    key=f"aprev_{prefix}_{selected_q}"
+                )
         else:
             st.warning("No answer_scheme.v found!")
             files_exist = False
 
     if os.path.exists(modules_file):
         with open(modules_file, "r") as f:
-            st.text_area("Modules CSV Preview", f.read(), width=300, height=250, disabled=True, key=f"mprev_{prefix}")
+            st.text_area(
+                "Modules CSV Preview",
+                f.read(),
+                height=250,
+                disabled=True,
+                key=f"mprev_{prefix}_{selected_q}"  
+            )
     else:
         st.warning("No modules.csv found!")
         files_exist = False

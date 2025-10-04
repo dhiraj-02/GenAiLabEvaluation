@@ -4,7 +4,7 @@ load_dotenv()
 
 import utils
 import Models.gemini as gemini
-from columns_config import COLUMNS
+import Models.openai as openai
 import run_v
 from Models.prompt import get_verilog_prompt_json
 
@@ -53,7 +53,7 @@ def main(question, solutions, progress_callback=None):
         prompts = get_verilog_prompt_json(question_txt, answer_scheme, student_solution, compilation_and_execution_output, modules, total_marks)
 
         # Evaluate with LLM
-        response = gemini.evaluate_verilog(prompts)
+        response = openai.evaluate_verilog(prompts)
 
         utils.append_to_file("op.txt", f"Student ID: {student_id}\n Prompt: {prompts}\n Response: {response}\n\n")
 
